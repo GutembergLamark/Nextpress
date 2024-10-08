@@ -1,0 +1,26 @@
+.ads {
+    width: 100%;
+    border: none;
+
+    &[data-skeleton] {
+        background-color: rgba(232, 232, 232, 1);
+        animation: skeleton_animation infinite 1.5s ease-in-out;
+
+        @keyframes skeleton_animation {
+            0% {
+                background-color: rgba(232, 232, 232, 1);
+            }
+            50% {
+                background-color: rgba(232, 232, 232, .5);
+            }
+            100% {
+                background-color: rgba(232, 232, 232, 1);
+            }
+        }
+    }
+
+    & iframe {
+        width: 100%;
+        border: none;
+    }
+}

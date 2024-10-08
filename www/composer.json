@@ -1,0 +1,39 @@
+{
+    "name": "cliente/site",
+    "type": "project",
+    "license": "private",
+    "authors": [
+        {
+            "name": "Yuri Köster",
+            "email": "yuri@okn.com.br"
+        }
+	],
+	"scripts" : {
+		"post-install-cmd" : []
+	},
+    "require": {
+        "php": "^7.4|^8.0",
+        "wpackagist-plugin/advanced-custom-fields": "^5.11",
+        "wpackagist-plugin/amp": "^2.2",
+        "wpackagist-plugin/google-site-kit": "^1.49",
+        "wpackagist-plugin/wordfence": "^7.5",
+        "wpackagist-plugin/wordfence-login-security": "^1.0",
+        "wpackagist-plugin/wordpress-seo": "^18.0",
+        "wpackagist-plugin/wp-mail-logging": "^1.10",
+        "wpackagist-plugin/wp-mail-smtp": "^3.2",
+        "wpackagist-plugin/wps-hide-login": "^1.9",
+        "wpackagist-plugin/velvet-blues-update-urls": "^3.2",
+        "wpackagist-plugin/imagify": "^1.10"
+    },
+    "repositories": {
+        "0": {
+            "type": "composer",
+            "url": "https://wpackagist.org"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
+}

@@ -1,0 +1,45 @@
+{
+    "name": "np-ks",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "create-template": "node ./nextpress.utils.js",
+        "analyzer": "node ./nextpress.analyzer.js"
+    },
+    "dependencies": {
+        "@next/bundle-analyzer": "^14.2.5",
+        "@splidejs/react-splide": "^0.7.12",
+        "@types/node": "20.2.5",
+        "@types/react": "^18.3.3",
+        "@types/react-dom": "18.2.4",
+        "chalk": "^5.2.0",
+        "client-only": "^0.0.1",
+        "eslint": "8.41.0",
+        "eslint-config-next": "13.4.4",
+        "framer-motion": "^10.12.16",
+        "html-react-parser": "^4.0.0",
+        "isomorphic-unfetch": "^4.0.2",
+        "moment": "^2.29.4",
+        "next": "^14.2.3",
+        "next-international": "^1.2.3",
+        "nextjs-toploader": "^1.6.12",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "react-hubspot-tracking-code-hook": "^1.2.2",
+        "server-only": "^0.0.1",
+        "sharp": "^0.32.1",
+        "typescript": "^5.4.5",
+        "unfetch": "4.2.0"
+    },
+    "sideEffects": [
+        "./src/sections/layout/index.ts",
+        "./src/sections/modules/index.ts"
+    ],
+    "devDependencies": {
+        "sass": "^1.62.1"
+    }
+}

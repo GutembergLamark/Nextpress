@@ -1,0 +1,70 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  - release/*
+
+variables:
+  - group: homolog-6-group
+  - name: projectName
+    value: np_ks
+  - name: projectType
+    value: wordpress
+
+pool:
+  vmImage: "ubuntu-latest"
+
+steps:
+  - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+    clean: true # whether to fetch clean each time
+    submodules: recursive # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+    path: "*" # path to check out source code, relative to the agent's build directory (e.g. \_work\1)
+    persistCredentials: true # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+  - script: echo Publicando $(projectName)
+    displayName: "Run a one-line script"
+
+  - task: SSH@0
+    inputs:
+      sshEndpoint: "Homolog_6"
+      runOptions: "inline"
+      inline: |
+        /home/azure_ci/commands/create_bare_repo.sh -n $(projectName)
+        echo 'test $(projectName)' >> a
+        cat a
+      readyTimeout: "20000"
+
+  - task: InstallSSHKey@0
+    inputs:
+      knownHostsEntry: "$(homolog6Fingerprint)"
+      sshPublicKey: "$(azureCiGitPub)"
+      sshKeySecureFile: "azure_ci_git"
+
+  - script: |
+      git branch
+      git fetch --all
+      git branch -r | sed -r 's/origin\///g' | sed -r 's/HEAD -> .*//g'| sed -r '/^\s*$/d'| xargs -n1 git checkout
+      git checkout $(Build.SourceBranchName)
+      git branch
+      git remote -v
+      git remote add homolog6  git@connect.h6.homolog.inf.br:/var/git/$(projectName).git
+      git remote -v
+      ssh-add -L
+      git push --all homolog6
+      echo /home/azure_ci/commands/publish_repo.sh -n $(projectName) -t $(projectType) -p $(System.TeamProject) -b release/$(Build.SourceBranchName)
+    displayName: "Run a multi-line script"
+
+  - task: SSH@0
+    inputs:
+      sshEndpoint: "Homolog_6"
+      runOptions: "inline"
+      inline: |
+        /home/azure_ci/commands/publish_repo.sh -n $(projectName) -t $(projectType) -p $(System.TeamProject) -b release/$(Build.SourceBranchName) > out.log 2> err.log
+        cat out.log
+        echo ERROS:
+        cat err.log
+        echo LOG_FILE:
+        cat /home/azure_ci//logs/publish_repo_$(date +"%Y_%m_%d").log
+      readyTimeout: "20000"
